@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_task_form" model="ir.ui.view">
+        <field name="name">project.task.inherit.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='date_deadline_and_recurring_task']" position="after">
+                <field name="start_date" string="Planned Date" widget="daterange"
+                       options="{'end_date_field':'end_date'}"/>
+                <field name="end_date" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_gantt" model="ir.ui.view">
+        <field name="name">project.task.gantt</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <gantt start_date="start_date" end_date="end_date" string="Project Tasks">
+                <field name="project_id"/>
+            </gantt>
+        </field>
+    </record>
+
+    <record id="open_view_task_list_gantt" model="ir.actions.act_window.view">
+        <field name="sequence" eval="50"/>
+        <field name="view_id" ref="gantt_view.view_task_gantt"/>
+        <field name="act_window_id" ref="project.action_view_all_task"/>
+        <field name="view_mode">gantt</field>
+    </record>
+</odoo>

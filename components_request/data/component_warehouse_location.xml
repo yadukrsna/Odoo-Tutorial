@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="component_warehouse_location" model="stock.location">
+        <field name="name">Components Shelf</field>
+        <field name="usage">internal</field>
+    </record>
+</odoo>

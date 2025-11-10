@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hr_employee_form_inherit_transfer" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.transfer</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="state" widget="statusbar"/>
+<!--                <button name="action_employee_transfer" string="Company Transfer" type="object" class="btn btn-secondary"/>-->
+<!--                <button name="action_approve_transfer" string="Approve Transfer" type="object" class="btn btn-primary"-->
+<!--                        invisible="not transfer_company_id"/>-->
+            </xpath>
+<!--            <xpath expr="//field[@name='company_id']" position="after">-->
+<!--                <field name="transfer_company_id" invisible="1"/>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+</odoo>
+
+

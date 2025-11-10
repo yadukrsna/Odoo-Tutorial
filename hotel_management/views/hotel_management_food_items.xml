@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_management_food_items_list_view" model="ir.ui.view">
+        <field name="name">hotel.management.food.items.list</field>
+        <field name="model">hotel.management.food.items</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="currency_id" invisible="1" optional="hide"/>
+                <field name="food_price"/>
+                <field name="food_quantity"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hotel_management_food_items_form_view" model="ir.ui.view">
+        <field name="name">hotel.management.food.items.form</field>
+        <field name="model">hotel.management.food.items</field>
+        <field name="priority" eval="10"/>
+        <field name="arch" type="xml">
+            <form string="Food Items">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="food_description"/>
+                            <field name="category_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="food_price" widget="monetary"/>
+                            <field name="food_quantity"/>
+                        </group>
+                        <group>
+                            <field name="food_image" widget="image" nolabel="1" class="oe_avatar"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hotel_management_food_card" model="ir.ui.view">
+        <field name="name">hotel.management.food.card</field>
+        <field name="model">hotel.management.food.items</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="category_id" readonly="1"/>
+                            <field name="food_price" readonly="1"/>
+                            <field name="food_description" readonly="1"/>
+                            <field name="food_quantity"/>
+                        </group>
+                        <group>
+                            <field name="food_image" widget="image" nolabel="1" class="oe_avatar"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_add_to_list" class="btn btn-primary" type="object">
+                            Add to List
+                        </button>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hotel_management_food_items" model="ir.actions.act_window">
+        <field name="name">Food Items</field>
+        <field name="res_model">hotel.management.food.items</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_product_view_inherit" model="ir.ui.view">
+        <field name="name">product.product.view.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='inventory']" position="inside">
+                <group>
+                    <field name="quantity"/>
+                    <field name="current_uom_id"/>
+                    <field name="target_uom_id"/>
+                    <field name="converted_quantity"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="product_product_view_inherit_list" model="ir.ui.view">-->
+<!--        <field name="name">product.product.view.inherit.list</field>-->
+<!--        <field name="model">product.product</field>-->
+<!--        <field name="inherit_id" ref="product.product_product_tree_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//list" position="inside">-->
+<!--                <field name="stock_valuation"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="product_product_view_inherit_kanban" model="ir.ui.view">-->
+<!--        <field name="name">product.product.view.inherit.kanban</field>-->
+<!--        <field name="model">product.product</field>-->
+<!--        <field name="inherit_id" ref="product.product_kanban_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//kanban" position="inside">-->
+<!--                <field name="stock_valuation"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+</odoo>

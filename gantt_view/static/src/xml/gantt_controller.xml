@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="gantt_view.GanttRenderer">
+        <div class="o_gantt_view" style="height: calc(100vh - 100px); display: flex; flex-direction: column;">
+            <div class="o_gantt_controls d-flex justify-content-center align-items-center gap-2 mb-3 mt-3">
+                <div class="btn-group">
+                    <button class="btn btn-secondary" t-on-click="onPrev">
+                        <i class="fa fa-chevron-left"/>
+                    </button>
+                    <button class="btn btn-secondary" t-on-click="onSetDays">Days</button>
+                    <button class="btn btn-secondary" t-on-click="onSetWeeks">Weeks</button>
+                    <button class="btn btn-secondary" t-on-click="onSetMonths">Months</button>
+                    <button class="btn btn-secondary" t-on-click="onNext">
+                        <i class="fa fa-chevron-right"/>
+                    </button>
+                </div>
+            </div>
+            <div class="o_gantt_chart_wrapper" style="flex: 1; overflow: auto; border: 1px solid #dee2e6;">
+                <t t-set="timeScale" t-value="getTimeScale(state.scale)"/>
+                <t t-set="groupedItems" t-value="groupBy()"/>
+                <t t-set="cellWidth" t-value="state.scale === 'days' ? 60 : (state.scale === 'weeks' ? 200 : 50)"/>
+                <t t-set="totalCells" t-value="timeScale[0].sub.length"/>
+                <t t-set="timelineWidth" t-value="cellWidth * totalCells"/>
+
+                <div class="o_gantt_chart" style="min-width: max-content;">
+                    <div class="o_gantt_header" style="display: flex;">
+                        <div class="o_gantt_row_sidebar border-end border-bottom p-2 fw-bold bg-light"
+                             style="width: 250px; text-align:center;">
+                            Planning
+                        </div>
+                        <div class="o_gantt_header_scale" t-att-style="`width: ${timelineWidth}px; min-width: ${timelineWidth}px;`">
+                            <t t-foreach="timeScale" t-as="scale" t-key="scale_index">
+                                <div class="o_gantt_header_scale_item">
+                                    <div class="o_gantt_header_title border-bottom text-center p-2 fw-bold"
+                                         t-esc="scale.label"/>
+                                    <div class="o_gantt_header_cells" style="display: flex;">
+                                        <t t-foreach="scale.sub" t-as="cell" t-key="cell_index">
+                                            <div class="o_gantt_header_cell text-center border-bottom border-end p-1 small"
+                                                 t-att-style="`width: ${cellWidth}px; min-width: ${cellWidth}px; max-width: ${cellWidth}px; overflow: hidden;`"
+                                                 t-esc="cell.label"/>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="o_gantt_rows">
+                        <t t-foreach="groupedItems" t-as="project" t-key="project.id">
+                            <div class="o_gantt_row border-bottom" style="display: flex; position: relative;">
+                                <div class="o_gantt_row_sidebar border-end p-2"
+                                     style="width: 250px;">
+                                    <div class="fw-bold text-primary">
+                                        <span t-esc="project.name"/>
+                                    </div>
+                                </div>
+                                <div class="o_gantt_row_timeline"
+                                     t-att-style="`width: ${timelineWidth}px; min-width: ${timelineWidth}px; position: relative; height: 45px;`">
+                                    <t t-foreach="timeScale" t-as="scale" t-key="scale_index">
+                                        <div style="display: flex; position: absolute; width: 100%; height: 100%;">
+                                            <t t-foreach="scale.sub" t-as="cell" t-key="cell_index">
+                                                <div class="o_gantt_cell border-end"
+                                                     t-on-click="() => this.onCellClick(cell.date, project.id)"
+                                                     t-att-style="`cursor: pointer; height: 100%; width: ${cellWidth}px; min-width: ${cellWidth}px; max-width: ${cellWidth}px;`">
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                            <t t-foreach="project.tasks" t-as="task" t-key="task.id">
+                                <div class="o_gantt_row border-bottom" style="display: flex; position: relative;">
+                                    <div class="o_gantt_row_sidebar border-end p-2"
+                                         style="width: 250px; min-width: 250px;">
+                                        <div class="text-muted small ps-3">
+                                            <span t-esc="task.name"/>
+                                        </div>
+                                    </div>
+                                    <div class="o_gantt_row_timeline"
+                                         t-att-style="`width: ${timelineWidth}px; min-width: ${timelineWidth}px; position: relative; height: 45px;`">
+                                        <t t-foreach="timeScale" t-as="scale" t-key="scale_index">
+                                            <div style="display: flex; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                                <t t-foreach="scale.sub" t-as="cell" t-key="cell_index">
+                                                    <div class="o_gantt_cell border-end"
+                                                         t-att-style="`height: 100%; width: ${cellWidth}px; min-width: ${cellWidth}px; max-width: ${cellWidth}px;`">
+                                                    </div>
+                                                </t>
+                                            </div>
+                                            <t t-set="barPos" t-value="computeBarPosition(task, scale)"/>
+                                            <t t-if="!barPos.hidden and task.start_date and task.end_date">
+                                                <div class="o_gantt_bar bg-primary position-absolute d-flex align-items-center"
+                                                     t-att-style="`left: ${barPos.left}%; width: ${barPos.width}%; top: 25%; height: 50%; z-index: 10; border-radius: 4px;`"
+                                                     t-on-click="(ev) => this.onBarClick(task, ev)">
+                                                    <div class="o_gantt_resize_handle o_gantt_resize_start"
+                                                         t-on-mousedown="(ev) => this.onResizeStart(task, scale, 'start', ev)"
+                                                         style="position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: rgba(255,255,255,0.3); border-radius: 4px 0 0 4px;">
+                                                    </div>
+                                                    <span class="text-white px-2 small text-truncate" style="line-height: 1; pointer-events: none; flex: 1;" t-esc="task.name"/>
+                                                    <div class="o_gantt_resize_handle o_gantt_resize_end"
+                                                         t-on-mousedown="(ev) => this.onResizeStart(task, scale, 'end', ev)"
+                                                         style="position: absolute; right: 0; top: 0; bottom: 0; width: 8px; background: rgba(255,255,255,0.3); border-radius: 0 4px 4px 0;">
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <t t-if="state.showTaskPopup">
+                <div class="modal d-block" t-on-click="closePopup">
+                    <div class="modal-dialog modal-dialog-centered" t-on-click.stop="">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Select Task to Schedule</h5>
+                                <button type="button" class="btn-close" t-on-click="closePopup"/>
+                            </div>
+                            <div class="modal-body" style="max-height: 400px;">
+                                <div class="list-group">
+                                    <t t-foreach="state.availableTasks" t-as="task" t-key="task.id">
+                                        <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                                t-on-click="() => this.onTaskSelect(task.id)" t-esc="task.name">
+                                        </button>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" t-on-click="closePopup">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="gantt_view.GanttController">
+        <div t-ref="root" class="o_gantt_controller">
+            <Layout display="props.display" className="'h-100'">
+                <t t-set-slot="layout-actions">
+                    <SearchBar toggler="searchBarToggler"/>
+                </t>
+                <t t-set-slot="control-panel-navigation-additional">
+                    <t t-component="searchBarToggler.component" t-props="searchBarToggler.props"/>
+                </t>
+                <div class="o_gantt_renderer_container">
+                    <t t-component="props.Renderer" t-props="{'model': model, 'fieldName': props.fieldName}"/>
+                </div>
+            </Layout>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="custom_product_screen" xml:space="preserve">
+    <t t-name="pos_product_screen.CustomProductScreen">
+        <div class="screen h-100 bg-light d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center p-3 border-bottom bg-white">
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary" t-on-click="() => this.editProduct(product)">
+                        <i class="fa fa-plus me-2"/>Create Product
+                    </button>
+                    <button class="btn btn-secondary" t-on-click="closeCustomProductScreen">
+                        <i class="fa fa-times me-2"/>Close
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-3 flex-grow-1 overflow-auto">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th class="text-end">Price</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="showProducts()" t-as="product" t-key="product.id">
+                            <tr>
+                                <td><t t-esc="product.display_name"/></td>
+                                <td class="text-end"><t t-esc="product.lst_price"/></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm"
+                                            t-on-click="() => this.editProduct(product)">
+                                        <i class="fa fa-edit"/>
+                                    </button>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+</templates>

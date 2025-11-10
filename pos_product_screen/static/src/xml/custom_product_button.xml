@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="custom_product_button" xml:space="preserve">
+    <t t-name="pos_product_screen.Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'pos-rightheader')]" position="inside">
+            <button class="btn btn-light btn-lg lh-lg" t-on-click="onClickCustomProduct">
+                Product
+            </button>
+        </xpath>
+    </t>
+</templates>

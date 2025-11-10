@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="server_action_lunch_products" model="ir.actions.server">
+            <field name="name">Server Action Lunch Item</field>
+            <field name="model_id" ref="hotel_management.model_hotel_management_food_items"/>
+            <field name="state">code</field>
+            <field name="code">records.server_action_lunch()</field>
+        </record>
+
+        <record id="automation_lunch_product_item" model="base.automation">
+            <field name="name">Automation on lunch product create</field>
+            <field name="model_id" ref="hotel_management.model_hotel_management_food_items"/>
+            <field name="trigger">on_create_or_write</field>
+            <field name="action_server_ids" eval="[(4, ref('hotel_management.server_action_lunch_products'))]"/>
+        </record>
+    </data>
+</odoo>

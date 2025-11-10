@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="action_property_offers" model="ir.actions.act_window">
+            <field name="name">Property Offer</field>
+            <field name="res_model">estate.property.offers</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <record id="estate_property_offers_list_view" model="ir.ui.view" >
+                <field name="name">estate.property.offers.list</field>
+                <field name="model">estate.property.offers</field>
+                <field name="arch" type="xml">
+                    <list editable="top" decoration-success="status=='accepted'" decoration-danger="status=='refused'">
+                        <field name="price"/>
+                        <field name="status" invisible="status=='accepted' or status=='refused'"/>
+                        <field name="partner"/>
+                        <field name="validity"/>
+                        <field name="deadline"/>
+                        <button name="action_accept" title="Accept Offer" type="object" icon="fa-check" invisible="status=='accepted' or status=='refused'"/>
+                        <button name="action_reject" title="Reject Offer" type="object" icon="fa-close" invisible="status=='accepted' or status=='refused'"/>
+                    </list>
+                </field>
+        </record>
+        <record id="estate_property_offers_form_view" model="ir.ui.view">
+                <field name="name">estate.property.offers.form</field>
+                <field name="model">estate.property.offers</field>
+                <field name="arch" type="xml">
+                    <form string="Property Offers">
+                        <sheets>
+                            <group>
+                                <field name="price"/>
+                                <field name="validity"/>
+                                <field name="deadline"/>
+                                <field name="status"/>
+                                <field name="partner"/>
+                            </group>
+                        </sheets>
+                    </form>
+                </field>
+        </record>
+    </data>
+</odoo>

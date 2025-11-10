@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="email_template_allocation" model="mail.template">
+            <field name="name">Unused Allocation</field>
+            <field name="model_id" ref="model_hr_leave_allocation"/>
+            <field name="subject">Your Allocated Leaves have expired</field>
+            <field name="email_from">{{ object.employee_id.work_email }}</field>
+            <field name="email_to">{{ object.employee_id.work_email }}</field>
+            <field name="description">Send to employee if their leave allocation ends today</field>
+            <field name="body_html" type="html">
+                <div>
+                    <span t-field="object.employee_id.remaining_leaves"/> leaves
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

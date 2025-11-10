@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="email_template_hotel" model="mail.template">
+            <field name="name">Hotel Management Mail</field>
+            <field name="model_id" ref="hotel_management.model_hotel_management_accommodation"/>
+            <field name="subject">Your Check Out is Today!</field>
+            <field name="email_from">{{ (object.user_id.email or 'info@hotel.com') }}</field>
+            <field name="email_to">{{ (object.guest_id.email) }}</field>
+            <field name="description">Send to guest when their check out date is today</field>
+            <field name="body_html" type="html">
+                <div>
+                    Hello <t t-out="object.guest_id.name"/>,
+                    <br/>
+                    Your check out date is today. If you want to extend your stay please contact us.
+                    <br/>
+                    Hope you enjoyed the stay.
+                    <br/>
+                    Regards,
+                    <br/>
+                    <t t-out="object.user_id.name"/>
+                    <br/>
+                    Hotel Management Team
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

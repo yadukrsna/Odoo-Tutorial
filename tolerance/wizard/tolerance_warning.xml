@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="tolerance_warning_wizard_view" model="ir.ui.view">
+        <field name="name">tolerance.warning.wizard.form</field>
+        <field name="model">tolerance.warning.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Tolerance Warning">
+                <sheet>
+                    <group>
+                        <field name="message" readonly="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_accept" string="Accept" type="object" class="btn-primary"/>
+                        <button name="action_dont_accept" string="Don't Accept" type="object" class="btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

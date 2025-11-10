@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="payment_paytrail_method" model="payment.method">
+        <field name="name">Paytrail</field>
+        <field name="code">paytrail</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment_paytrail/static/src/img/Paytrail_logo.jpg"/>
+    </record>
+    <record id="payment_paytrail_inbound" model="account.payment.method">
+        <field name="name">Paytrail</field>
+        <field name="code">paytrail</field>
+        <field name="payment_type">inbound</field>
+    </record>
+</odoo>

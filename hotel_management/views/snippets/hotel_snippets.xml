@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="inherit_snippets" inherit_id="website.snippets">
+        <xpath expr="//snippets[@id='snippet_groups']" position="inside">
+            <t t-snippet="hotel_management.banner_snippet"
+               string="Hotel banner"
+               t-thumbnail="/website/static/src/img/snippets_thumbs/s_picture.svg"/>
+            <t t-snippet="hotel_management.hotel_management_form"
+               string="Hotel Form"
+               t-thumbnail="/website/static/src/img/snippets_thumbs/s_website_form.svg"/>
+            <t t-snippet="hotel_management.hotel_room_snippet"
+               string="Hotel Room"
+               t-thumbnail="/website/static/src/img/snippets_thumbs/s_three_columns.svg"/>
+            <t t-snippet="hotel_management.hotel_gallery_snippet"
+               string="Hotel Gallery"
+               t-thumbnail="/website/static/src/img/snippets_thumbs/s_three_columns.svg"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_custom_popup.CustomPopup" owl="1">
+        <div class="modal fade show d-block">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title">Credit Limit Exceeded</h5>
+                        <button type="button" class="btn-close" t-on-click="this.closeModal"/>
+                    </div>
+                    <div class="modal-body bg-danger-subtle">
+                        <p>You Already Have Some Dues And Credit Limit Exceeds With This Order.</p>
+                        <p>Dues: <t t-esc="this.dues"/></p>
+                        <p>Credit Limit: <t t-esc="this.creditLimit"/></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

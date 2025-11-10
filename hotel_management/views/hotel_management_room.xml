@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_management_room_form_view" model="ir.ui.view">
+        <field name="name">hotel.management.room.form</field>
+        <field name="model">hotel.management.room</field>
+        <field name="arch" type="xml">
+            <form string="Hotel Rooms">
+                <sheet>
+                    <group>
+                        <group>
+                            <h1>
+                                <field name="name" placeholder="Room Number"/>
+                            </h1>
+                            <field name="facility_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="bed"/>
+                            <field name="available_beds" invisible="bed!='dormitory'"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="rent" widget="monetary"/>
+                            <field name="state"/>
+                            <field name="uom_id" invisible="1"/>
+                            <field name="company_id" options="{'no_create':True}" placeholder="visible to all"/>
+                        </group>
+                        <group>
+                            <field name="image_1920" widget="image" nolabel="1" class="oe_avatar"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hotel_management_room_list_view" model="ir.ui.view">
+        <field name="name">hotel.management.room.list</field>
+        <field name="model">hotel.management.room</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="bed"/>
+                <field name="currency_id" invisible="1" optional="hide"/>
+                <field name="rent" widget="monetary"/>
+                <field name="facility_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hotel_management_room_search_view" model="ir.ui.view">
+        <field name="name">hotel.management.room.search</field>
+        <field name="model">hotel.management.room</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Bed Type" name="bed_type" context="{'group_by': 'bed'}"/>
+                <filter string="Available" name="available" domain="[('state', '=' , 'available')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hotel_management_room" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+        <field name="res_model">hotel.management.room</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_available':True}</field>
+    </record>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="component_access" model="ir.module.category">
+        <field name="name">Component Access</field>
+    </record>
+
+    <record id="requisition_manager" model="res.groups">
+        <field name="name">Requisition Manager</field>
+        <field name="category_id" ref="components_request.component_access"/>
+    </record>
+
+    <record id="requisition_head" model="res.groups">
+        <field name="name">Requisition Head</field>
+        <field name="category_id" ref="components_request.component_access"/>
+    </record>
+
+    <record id="requisition_user" model="res.groups">
+        <field name="name">Requisition User</field>
+        <field name="category_id" ref="components_request.component_access"/>
+    </record>
+</odoo>

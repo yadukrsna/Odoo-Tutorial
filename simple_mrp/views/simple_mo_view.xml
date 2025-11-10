@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="simple_mo_list_view" model="ir.ui.view">
+        <field name="name">simple.mrp.list.view</field>
+        <field name="model">simple.mrp.production</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="product_qty"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="simple_mo_form_view" model="ir.ui.view">
+        <field name="name">simple.mrp.form.view</field>
+        <field name="model">simple.mrp.production</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="confirm" class="btn btn-primary" type="object" invisible="state != 'draft'"/>
+                    <button name="action_produce_all" string="Produce All" class="btn btn-primary" type="object" invisible="state != 'confirmed'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft, confirmed, done"/>
+                </header>
+                <sheet>
+                    <div name="button_box">
+                        <button class="oe_stat_button" type="object" icon="fa-industry" string="Manufacturing"
+                                name="action_view_manufacturing" invisible="smo_count == 0">
+                            <field name="smo_count" string="Manufacturing" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" icon="fa-credit-card" string="Purchase"
+                                name="action_view_purchase" invisible="po_count == 0">
+                            <field name="po_count" string="Purchase" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="product_qty"/>
+                        <field name="simple_bom_id"/>
+                    </group>
+                    <field name="simple_stock_move_ids">
+                        <list editable="bottom">
+                            <field name="product_id"/>
+                            <field name="product_qty"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_simple_mo" model="ir.actions.act_window">
+        <field name="name">Simple MO</field>
+        <field name="res_model">simple.mrp.production</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="simple_mo_root_menu" name="Simple Manufacturing"/>
+    <menuitem id="simple_mo_menu" name="Manufacturing" parent="simple_mo_root_menu" action="action_simple_mo"/>
+</odoo>

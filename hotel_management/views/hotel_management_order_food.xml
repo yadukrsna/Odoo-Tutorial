@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="hotel_management_order_food_list_view" model="ir.ui.view">
+            <field name="name">hotel.management.order.food.list</field>
+            <field name="model">hotel.management.order.food</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="accommodation_id"/>
+                    <field name="room_id"/>
+                    <field name="guest_id"/>
+                    <field name="order_time"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="hotel_management_order_food_form_view" model="ir.ui.view">
+            <field name="name">hotel.management.order.food.form</field>
+            <field name="model">hotel.management.order.food</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm_order" type="object" class="btn btn-primary"
+                                invisible="not order_list_ids or state == 'confirmed'">Confirm Order
+                        </button>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft, confirmed"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="accommodation_id" domain="[('state', '=', 'check in')]"
+                                   options="{'no_create': True}" force_save="1"/>
+                            <field name="room_id" force_save="1"/>
+                            <field name="guest_id" force_save="1"/>
+                            <field name="order_time"/>
+                        </group>
+                        <notebook>
+                            <page string="Menu">
+                                <group>
+                                    <field name="category_ids" widget="many2many_tags"/>
+                                </group>
+                                <group>
+                                    <field name="food_items_ids"
+                                           widget="many2many_kanban"
+                                           nolabel="1" context="{'order_id': id, 'accommodation_id': accommodation_id}">
+                                        <kanban class="o_kanban_mobile" action="action_open_food" type="object">
+                                            <templates>
+                                                <t t-name="card">
+                                                    <div class="flex">
+                                                        <aside>
+                                                            <field name="food_image" class="h-80"
+                                                                   widget="image"/>
+                                                        </aside>
+                                                        <div class="col-2">
+                                                            <div>
+                                                                <field name="currency_id" invisible="1"
+                                                                       class="fw-bold"/>
+                                                            </div>
+                                                            <div>
+                                                                <field name="food_price" class="fw-bold"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-4">
+                                                        <div class="col-4">
+                                                            <field name="name" class="fw-bold"/>
+                                                        </div>
+                                                        <div>
+                                                            <field name="category_id" class="fw-bold"/>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Order List">
+                                <field name="order_list_ids">
+                                    <list create="false">
+                                        <field name="food_item_id"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="currency_id" invisible="1" optional="hide"/>
+                                        <field name="price_unit"/>
+                                        <field name="subtotal" readonly="1"/>
+                                    </list>
+                                </field>
+                                <div class="o_group row align-items-start mt-2 mt-md-0">
+                                    <div class="o_inner_group oe_subtotal_footer d-flex order-0 order-lg-1
+                                     flex-column fw-bold">
+                                        <field name="currency_id" invisible="1"/>
+                                        <h3>Total</h3>
+                                        <field name="total_amount" string="Total" readonly="1"/>
+                                    </div>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_hotel_management_order_food" model="ir.actions.act_window">
+            <field name="name">Order Food</field>
+            <field name="res_model">hotel.management.order.food</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>
+
+

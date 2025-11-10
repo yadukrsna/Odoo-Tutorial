@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_hotel_management">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Hotel Management Report</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="fw-bold">SL.No.</th>
+                                <th class="fw-bold">Guest</th>
+                                <th class="fw-bold">Check In</th>
+                                <th class="fw-bold">Check Out</th>
+                                <th class="fw-bold">Room</th>
+                                <th class="fw-bold">Type</th>
+                                <th class="fw-bold">State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="si" t-value="0"/>
+                            <t t-foreach="docs.get('result')" t-as="i">
+                                <tr>
+                                    <t t-set="si" t-value="si + 1"/>
+                                    <td>
+                                        <t t-esc="si"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['guest_name']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['check_in']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['check_out']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['room']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['room_type']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['state']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

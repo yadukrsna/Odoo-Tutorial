@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="components_request_list_view" model="ir.ui.view">
+        <field name="name">components.request.list</field>
+        <field name="model">components.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="employee_id"/>
+                <field name="state"/>
+                <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="currency_id" invisible="1" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="components_request_form_view" model="ir.ui.view">
+        <field name="name">components.request.form</field>
+        <field name="model">components.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="to submit, submitted, approval head, approved, rejected"/>
+                    <button name="action_user_submit" string="Submit" class="btn-primary" type="object"
+                            invisible="state!='to submit'" groups="components_request.requisition_user"/>
+                    <button name="action_manager_approval" string="Approve" class="btn-primary" type="object"
+                            invisible="state!='submitted'" groups="components_request.requisition_manager"/>
+                    <button name="action_head_approval" string="Approve" class="btn-primary" type="object"
+                            invisible="state!='approval head'" groups="components_request.requisition_head"/>
+                    <button name="action_head_rejection" string="Reject" type="object"
+                            invisible="state!='approval head'" groups="components_request.requisition_head"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="sale_order_id"/>
+                        <field name="product_ids" nolabel="1" readonly="state!='to submit'">
+                            <list editable="bottom">
+                                <field name="product_id"/>
+                                <field name="quantity"/>
+                                <field name="route"/>
+                                <field name="vendor_ids" widget="many2many_tags"/>
+                                <field name="currency_id" invisible="1" optional="hide"/>
+                                <field name="unit_price" widget="monetary" currency_field="currency_id"/>
+                                <field name="subtotal" widget="monetary" currency_field="currency_id"/>
+                            </list>
+                        </field>
+                    </group>
+                    <div class="o_group row align-items-start mt-2 mt-md-0">
+                        <div class="o_inner_group oe_subtotal_footer d-flex order-0 order-lg-1 flex-column fw-bold">
+                            <h3>Total:</h3>
+                            <field name="total" readonly="1" widget="monetary" currency_field="currency_id"/>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="components_request_kanban_view" model="ir.ui.view">
+        <field name="name">components.request.kanban</field>
+        <field name="model">components.request</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="row">
+                                <div>
+                                    <strong>
+                                        <field name="employee_id"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div>
+                                <field name="total" widget="monetary" currency_field="currency_id"/>
+                                <field name="currency_id" invisible="1" optional="hide"/>
+                            </div>
+                            <div>
+                                <field name="state"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+
+<!--    <record id="components_request_gantt_view" model="ir.ui.view">-->
+<!--        <field name="name">components.request.gantt</field>-->
+<!--        <field name="model">components.request</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <timeline string="Components request gantt"-->
+<!--                   start="start_date"-->
+<!--                   stop="end_date"-->
+<!--                   color="state">-->
+<!--                <field name="employee_id"/>-->
+<!--            </timeline>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="action_components_request" model="ir.actions.act_window">
+        <field name="name">Components Request</field>
+        <field name="res_model">components.request</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    <menuitem id="components_request_menu" name="Components Request" action="action_components_request"/>
+</odoo>

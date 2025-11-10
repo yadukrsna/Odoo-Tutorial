@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Template for the Advanced Dashboard -->
+<templates id="template" xml:space="preserve">
+<t t-name="client_action.hotel_dashboard">
+    	<div>
+        	<span>Test Case</span>
+        	<h1><center><span>Accommodations</span></center></h1>
+<!--            <t t-foreach="data" t-as="record">-->
+<!--                <div>-->
+<!--                    <span><t-esc="record.accommodation_id</span>-->
+<!--                </div>-->
+<!--            </t>-->
+    	</div>
+<!--	You can add the templates here-->
+	</t>
+</templates>

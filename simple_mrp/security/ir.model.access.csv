@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_simple_mrp_bom,Access Simple MRP BOM,model_simple_mrp_bom,base.group_user,1,1,1,1
+access_simple_bom_line,Access Simple BOM Line,model_simple_bom_line,base.group_user,1,1,1,1
+access_simple_mrp_production,Access Simple MRP Production,model_simple_mrp_production,base.group_user,1,1,1,1
+access_simple_stock_move,Access Simple Stock Move,model_simple_stock_move,base.group_user,1,1,1,1

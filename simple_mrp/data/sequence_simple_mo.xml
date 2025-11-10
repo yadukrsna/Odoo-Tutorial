@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="sequence_mo" model="ir.sequence">
+            <field name="name">MO Sequence</field>
+            <field name="code">simple.mrp.production</field>
+            <field name="prefix">WH/MO/</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+        </record>
+    </data>
+</odoo>

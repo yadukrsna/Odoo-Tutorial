@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hotel_management_access" model="ir.module.category">
+        <field name="name">Hotel Management</field>
+    </record>
+
+    <record id="hotel_manager" model="res.groups">
+        <field name="name">Hotel Manager</field>
+        <field name="category_id" ref="hotel_management.hotel_management_access"/>
+    </record>
+
+    <record id="hotel_receptionist" model="res.groups">
+        <field name="name">Hotel Receptionist</field>
+        <field name="category_id" ref="hotel_management.hotel_management_access"/>
+    </record>
+
+    <record id="hotel_company_accommodation_rule" model="ir.rule">
+        <field name="name">Hotel Accommodation Company Rule</field>
+        <field name="model_id" ref="hotel_management.model_hotel_management_accommodation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="hotel_company_order_rule" model="ir.rule">
+        <field name="name">Hotel Order Company Rule</field>
+        <field name="model_id" ref="hotel_management.model_hotel_management_order_food"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="hotel_company_room_rule" model="ir.rule">
+        <field name="name">Hotel Room Company Rule</field>
+        <field name="model_id" ref="hotel_management.model_hotel_management_room"/>
+        <field name="domain_force">
+        ['|', ('company_id', '=', False),('company_id', 'in', company_ids)]
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="hotel_management.hotel_data">
+        <section class="room_section py-5">
+            <div id="hotel_carousel" class="container carousel slide"
+                 data-bs-ride="carousel" t-att-data-bs-interval="5000">
+                <div class="carousel-inner w-100 mx-auto" role="listbox">
+                    <t t-foreach="chunks" t-as="chunk" t-foreach-index="chunk" t-key="chunk">
+                        <div t-att-class="chunk.is_active ? 'carousel-item active' : 'carousel-item'">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <t t-foreach="chunk" t-as="item" t-foreach-index="item" t-key="item">
+                                        <div class="col-12 col-md-4 mt-3">
+                                            <div class="card h-100" style="min-height: 300px;">
+                                                <t t-if="item.image_1920">
+                                                    <img t-att-src="'data:image/png;base64,'+ item.image_1920"
+                                                         class="card-img-top"
+                                                         alt="Room image"
+                                                         style="height: 180px; object-fit: cover;"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <img src="/website/static/src/img/snippets_thumbs/s_image.svg"
+                                                         class="card-img-top"
+                                                         alt="Placeholder"
+                                                         style="height: 180px; object-fit: cover;"/>
+                                                </t>
+                                                <div class="card-body fw-bold">
+                                                    Bed: <t t-esc="item.bed"/>
+                                                    <br/>
+                                                    <p class="card-text">
+                                                        Rent: <t t-esc="item.currency_symbol + item.rent"/>
+                                                        <br/>
+                                                        State:
+                                                        <t t-esc="item.state"/>
+                                                        <t t-if="item.bed == 'Dormitory'">
+                                                            <br/>
+                                                            Available Beds:
+                                                            <t t-esc="item.available"/>
+                                                        </t>
+                                                        <br/>
+                                                        Facilities:
+                                                        <t t-if="item.facilities">
+                                                            <t t-foreach="item.facilities" t-as="fac"
+                                                               t-foreach-index="fac_index" t-key="fac_index">
+                                                                <span class="badge bg-primary me-1">
+                                                                    <t t-esc="fac"/>
+                                                                </span>
+                                                            </t>
+                                                        </t>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <a t-attf-href="#hotel_carousel" class="carousel-control-prev" data-bs-slide="prev"
+                   role="button" aria-label="Previous" title="Previous">
+                    <span class="fa fa-chevron-circle-left fa-2x" style="color: black"/>
+                    <span class="visually-hidden">Previous</span>
+                </a>
+                <a t-attf-href="#hotel_carousel" class="carousel-control-next" data-bs-slide="next"
+                   role="button" aria-label="Next" title="Next">
+                    <span class="fa fa-chevron-circle-right fa-2x" style="color: black"/>
+                    <span class="visually-hidden">Next</span>
+                </a>
+            </div>
+        </section>
+    </t>
+    <t t-name="hotel_management.hotel_gallery">
+        <div class="hotel-gallery-wrapper">
+            <div class="container py-4">
+                <div class="row">
+                    <t t-foreach="images" t-as="img" t-key="img">
+                        <div class="col-12 col-md-4 mt-3">
+                            <div class="card h-100">
+                                <img t-att-src="'data:image/png;base64,' + img.image"
+                                     class="card-img-top gallery-card-img"
+                                     alt="Gallery"
+                                     style="height: 180px; object-fit: cover; cursor:pointer;"/>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+            <div class="modal fade" id="imageModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body p-0">
+                            <img id="modalImage" src="" class="img-fluid w-100"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

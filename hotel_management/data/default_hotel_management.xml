@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="default_hotel_management_facility_ac" model="hotel.management.facility">
+            <field name="name">A/C</field>
+        </record>
+        <record id="default_hotel_management_facility_wash" model="hotel.management.facility">
+            <field name="name">Wash Room</field>
+        </record>
+        <record id="default_hotel_management_facility_water" model="hotel.management.facility">
+            <field name="name">Hot Water</field>
+        </record>
+        <record id="default_hotel_management_facility_wifi" model="hotel.management.facility">
+            <field name="name">Wifi</field>
+        </record>
+        <record id="default_hotel_management_facility_tv" model="hotel.management.facility">
+            <field name="name">TV</field>
+        </record>
+
+        <record id="default_hotel_management_room_one" model="hotel.management.room">
+            <field name="name">101A</field>
+            <field name="bed">double</field>
+            <field name="rent">1200</field>
+            <field name="state">available</field>
+            <field name="facility_ids"
+                   eval="[(6, 0, [ref('default_hotel_management_facility_ac'),
+                    ref('default_hotel_management_facility_wash'),
+                    ref('default_hotel_management_facility_wifi')])]"/>
+            <field name="image_1920" type="base64" file="hotel_management/static/src/img/room1.jpg"/>
+        </record>
+        <record id="default_hotel_management_room_two" model="hotel.management.room">
+            <field name="name">101B</field>
+            <field name="bed">single</field>
+            <field name="rent">1000</field>
+            <field name="state">available</field>
+            <field name="facility_ids"
+                   eval="[(6, 0, [ref('default_hotel_management_facility_ac'),
+                    ref('default_hotel_management_facility_wash'),
+                    ref('default_hotel_management_facility_wifi')])]"/>
+            <field name="image_1920" type="base64" file="hotel_management/static/src/img/room2.jpg"/>
+        </record>
+        <record id="default_hotel_management_room_three" model="hotel.management.room">
+            <field name="name">101C</field>
+            <field name="bed">dormitory</field>
+            <field name="rent">800</field>
+            <field name="state">available</field>
+            <field name="available_beds">5</field>
+            <field name="facility_ids"
+                   eval="[(6, 0, [ref('default_hotel_management_facility_tv'),
+                   ref('default_hotel_management_facility_water'),
+                   ref('default_hotel_management_facility_wash')])]"/>
+            <field name="image_1920" type="base64" file="hotel_management/static/src/img/dorm.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_room_four" model="hotel.management.room">
+            <field name="name">102A</field>
+            <field name="bed">double</field>
+            <field name="rent">1200</field>
+            <field name="state">not available</field>
+            <field name="facility_ids"
+                   eval="[(6, 0, [ref('default_hotel_management_facility_tv'),
+                   ref('default_hotel_management_facility_water'),
+                   ref('default_hotel_management_facility_wash'),ref('default_hotel_management_facility_wifi')])]"/>
+            <field name="image_1920" type="base64" file="hotel_management/static/src/img/room3.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_room_five" model="hotel.management.room">
+            <field name="name">102B</field>
+            <field name="bed">single</field>
+            <field name="rent">1100</field>
+            <field name="state">not available</field>
+            <field name="facility_ids"
+                   eval="[(6, 0, [ref('default_hotel_management_facility_tv'),
+                   ref('default_hotel_management_facility_water'),
+                   ref('default_hotel_management_facility_wash'),ref('default_hotel_management_facility_wifi')])]"/>
+            <field name="image_1920" type="base64" file="hotel_management/static/src/img/room4.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_room_six" model="hotel.management.room">
+            <field name="name">102C</field>
+            <field name="bed">dormitory</field>
+            <field name="rent">900</field>
+            <field name="state">available</field>
+            <field name="available_beds">3</field>
+            <field name="facility_ids"
+                   eval="[(6, 0, [ref('default_hotel_management_facility_tv'),
+                   ref('default_hotel_management_facility_water'),
+                   ref('default_hotel_management_facility_wash')])]"/>
+            <field name="image_1920" type="base64" file="hotel_management/static/src/img/dorm3.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_breakfast_category" model="hotel.management.food.category">
+            <field name="name">Breakfast</field>
+        </record>
+        <record id="default_hotel_management_lunch_category" model="hotel.management.food.category">
+            <field name="name">Lunch</field>
+        </record>
+        <record id="default_hotel_management_dinner_category" model="hotel.management.food.category">
+            <field name="name">Dinner</field>
+        </record>
+        <record id="default_hotel_management_dessert_category" model="hotel.management.food.category">
+            <field name="name">Dessert</field>
+        </record>
+        <record id="default_hotel_management_hot_category" model="hotel.management.food.category">
+            <field name="name">Hot Drinks</field>
+        </record>
+        <record id="default_hotel_management_cold_category" model="hotel.management.food.category">
+            <field name="name">Cold Drinks</field>
+        </record>
+
+        <record id="default_hotel_management_breakfast_item" model="hotel.management.food.items">
+            <field name="name">French Toast</field>
+            <field name="food_description">Honey Glazed</field>
+            <field name="category_id" ref="default_hotel_management_breakfast_category"/>
+            <field name="food_price">6</field>
+            <field name="food_image" type="base64" file="hotel_management/static/src/img/french.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_lunch_items" model="hotel.management.food.items">
+            <field name="name">Biriyani</field>
+            <field name="food_description">Spicy Fried Chicken Biriyani</field>
+            <field name="category_id" ref="default_hotel_management_lunch_category"/>
+            <field name="food_price">12</field>
+            <field name="food_image" type="base64" file="hotel_management/static/src/img/biriyani.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_dinner_items" model="hotel.management.food.items">
+            <field name="name">Porotta</field>
+            <field name="food_description">Wheat Porotta</field>
+            <field name="category_id" ref="default_hotel_management_dinner_category"/>
+            <field name="food_price">2.5</field>
+            <field name="food_image" type="base64" file="hotel_management/static/src/img/porotta.jpeg"/>
+        </record>
+
+        <record id="default_hotel_management_dinner_curry_items" model="hotel.management.food.items">
+            <field name="name">Tandoori</field>
+            <field name="food_description">Extras: Gravy and Mayo</field>
+            <field name="category_id" ref="default_hotel_management_dinner_category"/>
+            <field name="food_price">12</field>
+            <field name="food_image" type="base64" file="hotel_management/static/src/img/food5.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_dessert_items" model="hotel.management.food.items">
+            <field name="name">Ilaaneer Pudding</field>
+            <field name="food_description">Chefs Special</field>
+            <field name="category_id" ref="default_hotel_management_dessert_category"/>
+            <field name="food_price">8</field>
+            <field name="food_image" type="base64" file="hotel_management/static/src/img/ilaaneer.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_hot_items" model="hotel.management.food.items">
+            <field name="name">Coffee</field>
+            <field name="food_description">Bru</field>
+            <field name="category_id" ref="default_hotel_management_hot_category"/>
+            <field name="food_price">2</field>
+            <field name="food_image" type="base64" file="hotel_management/static/src/img/coffee.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_cold_items" model="hotel.management.food.items">
+            <field name="name">Pepsi Cola</field>
+            <field name="food_description">Sugar Free</field>
+            <field name="category_id" ref="default_hotel_management_cold_category"/>
+            <field name="food_price">2.5</field>
+            <field name="food_image" type="base64" file="hotel_management/static/src/img/cola.jpg"/>
+        </record>
+
+        <record id="default_hotel_management_product_rent" model="product.product">
+            <field name="name">Hotel Accommodation Rent</field>
+            <field name="type">service</field>
+            <field name="taxes_id" eval="None"/>
+        </record>
+
+        <record id="default_hotel_management_product_restaurant" model="product.product">
+            <field name="name">Restaurant Cost</field>
+            <field name="type">service</field>
+            <field name="taxes_id" eval="None"/>
+        </record>
+
+        <record id="default_hotel_gallery" model="hotel.gallery">
+            <field name="image_1" type="base64" file="hotel_management/static/src/img/reception.jpg"/>
+            <field name="image_2" type="base64" file="hotel_management/static/src/img/corridor.jpg"/>
+            <field name="image_3" type="base64" file="hotel_management/static/src/img/pool2.jpg"/>
+            <field name="image_4" type="base64" file="hotel_management/static/src/img/pool.jpg"/>
+            <field name="image_5" type="base64" file="hotel_management/static/src/img/garden.jpg"/>
+            <field name="image_6" type="base64" file="hotel_management/static/src/img/gym.jpg"/>
+            <field name="image_7" type="base64" file="hotel_management/static/src/img/room2.jpg"/>
+            <field name="image_8" type="base64" file="hotel_management/static/src/img/room3.jpg"/>
+            <field name="image_9" type="base64" file="hotel_management/static/src/img/dorm.jpg"/>
+            <field name="image_10" type="base64" file="hotel_management/static/src/img/room1.jpg"/>
+            <field name="image_11" type="base64" file="hotel_management/static/src/img/room4.jpg"/>
+            <field name="image_12" type="base64" file="hotel_management/static/src/img/dorm3.jpg"/>
+            <field name="image_13" type="base64" file="hotel_management/static/src/img/biriyani.jpg"/>
+            <field name="image_14" type="base64" file="hotel_management/static/src/img/food2.jpg"/>
+            <field name="image_15" type="base64" file="hotel_management/static/src/img/food3.jpg"/>
+            <field name="image_16" type="base64" file="hotel_management/static/src/img/food4.jpg"/>
+            <field name="image_17" type="base64" file="hotel_management/static/src/img/tikka.jpg"/>
+            <field name="image_18" type="base64" file="hotel_management/static/src/img/food6.jpg"/>
+        </record>
+    </data>
+</odoo>
+
+

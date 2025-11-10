@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="portal_hotel" name="Order" inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'hotel'" t-attf-class="breadcrumb-item #{'active ' if hotel else ''}">
+                <a t-if="hotel" t-attf-href="/hotel?{{ keep_query() }}">Hotel</a>
+                <t t-else="">Hotel</t>
+            </li>
+        </xpath>
+    </template>
+    <template id="portal_my_home_hotel" name="Hotel" customize_show="True"
+              inherit_id="portal.portal_my_home" priority="50">
+
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+
+        <xpath expr="//div[@id='portal_client_category']" position="inside">
+            <t t-if="request.env['hotel.management.accommodation'].sudo().search(
+            [('guest_id', '=', request.env.user.partner_id.id)])">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="config_card" t-value="True"/>
+                    <t t-set="icon" t-value="'/lunch/static/description/icon.png'"/>
+                    <t t-set="text">Follow, Order and pay food order</t>
+                    <t t-set="title">Food Order</t>
+                    <t t-set="url" t-value="'/hotel/order'"/>
+                </t>
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_hotel_food_order" name="Portal Hotel Food Order">
+        <t t-call="portal.portal_layout">
+            <div class="container-fluid portal_hotel">
+                <h3 class="mb-2">ORDER SUMMARY</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle" id="cartTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Item</th>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-end">Price</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end fw-bold">Total</td>
+                                <td class="text-end fw-bold" id="cartTotal">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <button class="btn btn-primary" id="confirmOrder">Confirm Order</button>
+                </div>
+                <h3 class="mt-4">ORDER YOUR FOOD HERE</h3>
+                <div class="row">
+                    <t t-foreach="food" t-as="item">
+                        <div class="col-12 col-md-4 mt-3">
+                            <div class="card h-100" style="min-height: 300px;">
+                                <img t-att-src="'data:image/png;base64,' + item['image'].decode('utf-8')"
+                                     class="card-img-top portal_img"
+                                     style="height:180px; object-fit:cover; cursor:pointer;"
+                                     t-att-data-id = "item['id']"
+                                     t-att-data-food="item['food']"
+                                     t-att-data-category="item['category']"
+                                     t-att-data-description="item['description']"
+                                     t-att-data-price="item['price']"
+                                     t-att-data-currency="item['currency_symbol']"/>
+                                <div class="card-body fw-bold">
+                                    <t t-esc="item['food']"/>
+                                    <p class="card-text">
+                                        Category:
+                                        <t t-esc="item['category']"/>
+                                        <br/>
+                                        Price:
+                                        <t t-esc="item['currency_symbol']"/>
+                                        <t t-esc="item['price']"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+
+                <div class="modal fade" id="foodModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 id="modalFoodTitle" class="modal-title fw-bold"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body d-flex flex-column flex-md-row">
+                                <div class="text-center">
+                                    <img id="modalFoodImage"
+                                         src=""
+                                         class="img-thumbnail"
+                                         style="width:150px; height:150px; object-fit:cover;"/>
+                                </div>
+                                <div class="fw-bold ms-md-4 mt-3 mt-md-0">
+                                    <p>
+                                        Category:
+                                        <span id="modalFoodCategory"></span>
+                                        <br/>
+                                        <br/>
+                                        Description:
+                                        <span id="modalDescription"></span>
+                                        <br/>
+                                        <br/>
+                                        Price:
+                                        <span id="modalFoodPrice"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" id="addToCart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="employee_transfer_wizard_form" model="ir.ui.view">
+        <field name="name">employee.transfer.wizard.form</field>
+        <field name="model">employee.transfer.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Employee Transfer">
+                <group>
+                    <field name="employee_id"/>
+                    <field name="transfer_company_id"/>
+                </group>
+                <footer>
+                    <button string="Confirm Transfer" name="action_confirm_transfer" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+        </form>
+        </field>
+    </record>
+</odoo>

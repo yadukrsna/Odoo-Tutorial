@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="banner_snippet" name="Header Banner Snippet">
+        <section id="snippet_selector" class="banner">
+            <div class="container-fluid p-0"
+                 style="height: 400px;">
+            </div>
+        </section>
+    </template>
+
+    <template id="hotel_room_snippet" name="Hotel Room Snippet">
+        <section class="room_section">
+            <div class="container">
+                <div class="hotel_section">
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="hotel_gallery_snippet" name="Hotel Gallery">
+        <section class="gallery_section">
+            <div class="container py-4 gallery_hotel">
+                <h2 class="text-center fw-bold mb-4" style="color:#714b67;">Galleria</h2>
+                <div class="hotel_img">
+                </div>
+            </div>
+
+        </section>
+    </template>
+
+    <template id="hotel_management_form" name="Accommodation Form">
+        <section class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h2 class="text-center fw-bold mb-4" style="color:#714b67;">Book Your Room</h2>
+                    <form action="/hotel/accommodation" method="post" class="hotel_form">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="row">
+                            <div class="col-md-6 mb-3" style="width:100%;">
+                                <label class="form-label fw-bold">Name</label>
+                                <input type="text" name="name" required="required" class="form-control user_name"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Arrival Date &amp; Time</label>
+                                <input type="datetime-local" name="check_in" required="required" class="form-control"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Expected Days</label>
+                                <input type="number" min="1" value="1" name="expected_days" class="form-control"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Room Type</label>
+                                <select name="bed" class="form-select" required="required">
+                                    <option value="">Please Select</option>
+                                    <option value="single">Single</option>
+                                    <option value="double">Double</option>
+                                    <option value="dormitory">Dormitory</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Number of Guests</label>
+                                <input type="number" min="1" value="1" name="guest_number"
+                                       class="form-control guest_number"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Facilities</label>
+                                <t t-set="facilities"
+                                   t-value="request.env['hotel.management.facility'].sudo().search([])"/>
+                                <select name="facility[]" class="form-select facility_tags" multiple="multiple">
+                                    <t t-foreach="facilities" t-as="facility">
+                                        <option t-att-value="facility.id">
+                                            <t t-esc="facility.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 add_other_guest" style="display:none;">
+                            <table id="other_guest_ids" class="table table-striped table-info align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Guest</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <t t-set="guest"
+                                               t-value="request.env['res.partner'].sudo().search([])"/>
+                                            <select name="guest_ids[]" class="form-select other_guest">
+                                                <option value="">Please Select</option>
+                                                <t t-foreach="guest" t-as="guest">
+                                                    <option t-att-value="guest.id"
+                                                            t-att-data-age="guest.age or ''"
+                                                            t-att-data-gender="guest.gender or ''">
+                                                        <t t-esc="guest.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" min="1" name="guest_age[]"
+                                                   class="form-control guest_age"/>
+                                        </td>
+                                        <td>
+                                            <select name="guest_gender[]"
+                                                    class="form-control guest_gender">
+                                                <option value="">Please Select</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger remove_guest">
+                                                <i class="fa fa-trash"/>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-end">
+                                <button type="button" class="add_guest fw-bold btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-plus me-1"/>
+                                    Add Guest
+                                </button>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-primary fw-bold px-4">
+                                Book Now
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <record id="website_hotel_menu" model="website.menu">
+        <field name="name">Booking</field>
+        <field name="url">/hotel</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">21</field>
+    </record>
+    <record id="website_gallery_menu" model="website.menu">
+        <field name="name">Gallery</field>
+        <field name="url">/gallery</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">22</field>
+    </record>
+</odoo>

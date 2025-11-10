@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="round_service_product" model="product.product">
+        <field name="name">Round off</field>
+        <field name="type">service</field>
+        <field name="taxes_id" eval="None"/>
+    </record>
+</odoo>

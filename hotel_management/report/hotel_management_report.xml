@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_hotel_management_report" model="ir.actions.report">
+        <field name="name">Hotel Management Report</field>
+        <field name="model">hotel.management.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hotel_management.report_hotel_management</field>
+        <field name="report_file">hotel_management.report_hotel_management</field>
+    </record>
+</odoo>

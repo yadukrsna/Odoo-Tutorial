@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="crm_dropdown.SalespersonFilter" owl="1">
+        <div class="o_salesperson_filter_container px-3 py-2 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+                <label class="text-muted small">Filter by Salesperson:</label>
+                <select class="form-select form-select-sm" t-on-change="onSalespersonChange"
+                        t-model="state.selectedSalesperson" style="width: auto;">
+                    <option value="">All Salesperson</option>
+                    <t t-foreach="state.salesperson" t-as="salesperson" t-key="salesperson.id">
+                        <option t-att-value="salesperson.id">
+                            <t t-esc="salesperson.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="web.ListView" t-inherit="web.ListView" t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-component='props.Renderer']" position="before">
+            <t t-if="props.resModel === 'crm.lead' and state">
+                <t t-call="crm_dropdown.SalespersonFilter"/>
+            </t>
+        </xpath>
+    </t>
+</templates>
