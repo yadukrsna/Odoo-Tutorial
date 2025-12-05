@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///home/cybrosys/nextjs-dashboard/app/dashboard/invoices/page.tsx"],"sourcesContent":["export default function() {\n    return <p>Invoices</p>\n}"],"names":[],"mappings":";;;;;;AAAe;IACX,qBAAO,6WAAC;kBAAE;;;;;;AACd"}}]
+}
